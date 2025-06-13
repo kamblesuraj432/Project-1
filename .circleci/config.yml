@@ -25,7 +25,7 @@ jobs:
               docker rm my-app-container
 
               # Run new container with latest build
-              docker run -d --name my-app-container -p 80:80 custom:latest
+              docker run -d --name my-app-container -p 80:80 custom-nginx:latest
 
               echo "Deployment complete!"
             EOF

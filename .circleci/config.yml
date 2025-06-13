@@ -14,6 +14,7 @@ jobs:
 
             ssh -i /tmp/aws_ssh_key -o StrictHostKeyChecking=no ubuntu@$EC2_PUBLIC_IP << 'EOF'
               echo "Connected to EC2"
+
               # Build Docker image
               docker build -t my-app:latest .
 
@@ -28,9 +29,11 @@ jobs:
             EOF
 
 workflows:
-  deploy:
+  version: 2
+  deploy_pipeline:
     jobs:
       - deploy-to-ec2:
           filters:
             branches:
               only: main
+

@@ -16,14 +16,14 @@ jobs:
               echo "Connected to EC2"
 
               # Build Docker image
-              docker build -t my-app:latest .
+              docker build -t custom-nginx:latest .
 
               # Stop & remove old container
               docker stop my-app-container || true
               docker rm my-app-container || true
 
               # Run new container with latest build
-              docker run -d --name my-app-container -p 80:80 my-app:latest
+              docker run -d --name my-app-container -p 80:80 custom:latest
 
               echo "Deployment complete!"
             EOF

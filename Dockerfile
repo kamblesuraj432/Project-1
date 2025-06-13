@@ -2,7 +2,7 @@
 FROM nginx:latest
 
 # Copy custom configuration files (if needed)
-RUN /app
+WORKDIR /app
 # Copy your website files
 COPY . /usr/share/nginx/html
 

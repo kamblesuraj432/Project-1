@@ -1,17 +1,30 @@
 version: 2.1
 
 jobs:
-  say-hello:
+  deploy-to-ec2:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - run: echo "Hello, World!"
+      - run:
+          name: SSH into AWS EC2 & Deploy
+          command: |
+            echo "$EC2_SSH_KEY" > /tmp/aws_ssh_key
+            chmod 600 /tmp/aws_ssh_key
 
-workflows:
-  hello-workflow:
-    jobs:
-      - say-hello:
-          filters:
-            branches:
-              only: main
+            ssh -i /tmp/aws_ssh_key -o StrictHostKeyChecking=no ubuntu@$EC2_PUBLIC_IP << 'EOF'
+              echo "Connected to EC2"
+              
+              # Build Docker image
+              docker build -t my-app:latest .
+
+              # Stop & remove old container
+              docker stop my-app-container || true
+              docker rm my-app-container || true
+
+              # Run new container with latest build
+              docker run -d --name my-app-container -p 80:80 my-app:latest
+
+              echo "Deployment complete!"
+            EOF
+

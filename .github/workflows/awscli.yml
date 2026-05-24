@@ -44,6 +44,6 @@ jobs:
 
       - name: Create S3 bucket and list
         run: |
-          BUCKET_NAME=surajkamble-stage-bucket-$(date +%s)
+          BUCKET_NAME=vilaskamble-stage-bucket-$(date +%s)
           aws s3 mb s3://$BUCKET_NAME --region ap-south-1
           aws s3 ls

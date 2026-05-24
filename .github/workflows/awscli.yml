@@ -1,4 +1,4 @@
-name: Three‑Stage CI/CD Pipeline
+name: Two‑Stage CI/CD Pipeline
 
 on:
   push:
@@ -28,6 +28,7 @@ jobs:
   # ☁️ Create & Deploy Stage
   create:
     runs-on: ubuntu-latest
+    needs: auth   # ensures horizontal flow (auth → create)
     permissions:
       id-token: write
       contents: read
@@ -43,6 +44,6 @@ jobs:
 
       - name: Create S3 bucket and list
         run: |
-          BUCKET_NAME=three-stage-bucket-$(date +%s)
+          BUCKET_NAME=two-stage-bucket-$(date +%s)
           aws s3 mb s3://$BUCKET_NAME --region ap-south-1
           aws s3 ls

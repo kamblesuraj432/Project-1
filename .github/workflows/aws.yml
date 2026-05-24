@@ -10,6 +10,10 @@ jobs:
   create-bucket:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write   # Required for OIDC
+      contents: read    # Required for actions/checkout
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,7 +22,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::882553102330:role/github-role   # Replace with your IAM role ARN
-          aws-region: ap-south-1                                     # Replace with your region
+          aws-region: ap-south-1
 
       - name: Create S3 bucket
         run: |

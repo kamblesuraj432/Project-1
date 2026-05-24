@@ -25,9 +25,8 @@ jobs:
         run: aws sts get-caller-identity
 
   # ☁️ 3. Create & Deploy Stage
-  create s3 bucket:
+  create:
     runs-on: ubuntu-latest
-    needs: build
     permissions:
       id-token: write
       contents: read

@@ -1,0 +1,43 @@
+pipeline:
+  name: test1
+  identifier: test1
+  projectIdentifier: suraj432project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: surajgithub
+        repoName: Project-1
+        build: <+input>
+  stages:
+    - stage:
+        name: docke-build
+        identifier: dockebuild
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: VM
+            spec:
+              type: Pool
+              spec:
+                poolName: kk
+                harnessImageConnectorRef: account.harnessImage
+                os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    shell: Bash
+                    command: docker build -t suraj .
+                  description: docker build -t suraj
